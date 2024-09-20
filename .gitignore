@@ -1,0 +1,58 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# TypeScript cache
+*.tsbuildinfo
+
+# VSCode settings
+.vscode/
+
+# MacOS files
+.DS_Store
+
+# npm packages
+package-lock.json
+
+# Yarn files
+yarn-error.log
+yarn-debug.log
+yarn.lock
+
+# Temporary files
+tmp/
+temp/
+
+# Coverage reports
+coverage/
+
+# Jest
+jest/
+
+# Storybook build outputs
+storybook-static/
+
+# IDEs
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Test output
+test-results/
+
+# Misc
+*.tgz
+*.gz
+*.zip
