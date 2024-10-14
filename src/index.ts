@@ -1,6 +1,7 @@
-import app from './app';
+import app, {fetchProducts} from './app';
 const session = require('express-session');
 import { config } from './config/config';
+import {logger} from './utils/logger';
 
 // Middleware de session avec la clé secrète provenant des variables de configuration
 app.use(session({
@@ -15,6 +16,13 @@ app.use(session({
 const port = config.port;
 
 // Démarrage du serveur
-app.listen(port, () => {
-  console.log(`Serveur en écoute sur <http://localhost>:${port}`);
-});
+
+function start() {
+  logger.info('Demarrage app');
+  app.listen(port, () => {
+    console.log(`Serveur en écoute sur <http://localhost>:${port}`);
+  });
+  fetchProducts();
+}
+
+start();

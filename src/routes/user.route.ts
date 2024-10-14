@@ -11,7 +11,7 @@ const SECRET_KEY = config.jwtSecret;
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/users:
  *   get:
  *     summary: Retrieve a list of users
  *     description: Retrieve a list of users from the API. Can be used to populate a list of users in your system.
@@ -36,7 +36,7 @@ router.get('/users', userController.getAllUsers);
 
 /**
  * @swagger
- * /api/register:
+ * /api/v1/register:
  *   post:
  *     summary: Register a new user
  *     description: Registers a new user by creating a username and password after hashing the password.
@@ -80,7 +80,7 @@ router.post('/register', async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /api/login:
+ * /api/v1/login:
  *   post:
  *     summary: Login and generate a JWT
  *     description: Authenticates a user and generates a JSON Web Token (JWT) for access to protected resources.
@@ -134,7 +134,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swagger
- * /api/protected:
+ * /api/v1/protected:
  *   get:
  *     summary: Access a protected resource
  *     description: Access a protected endpoint which requires a valid JWT token in the `Authorization` header.
