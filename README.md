@@ -6,8 +6,8 @@ Une API RESTful pour gérer divers produits, utilisant les données de FakeStore
 
 Avant de lancer l'API, assure-vous d'avoir installé:
 
-- [Node.js]
-- [npm]
+- Node.js
+- npm
 
 ## Installation
 
