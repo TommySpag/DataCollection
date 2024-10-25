@@ -1,6 +1,7 @@
 import express from 'express';
 import userRoutes from './routes/user.route';
 import productRoutes from './routes/product.route';
+import bookRoutes from './routes/book.route';
 import { errorMiddleware } from './middlewares/error.middleware';
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -29,6 +30,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api', userRoutes);
 app.use('/api', productRoutes);
+app.use('/api', bookRoutes);
 
 app.use(errorMiddleware);
 
