@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { IBook } from '../interfaces/book.interface';
 
-const bookSchema: Schema = new Schema({
+export const bookSchema: Schema = new Schema({
     title: {
       type: String,
       required: true,
@@ -12,6 +12,6 @@ const bookSchema: Schema = new Schema({
     },
   });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model<IBook>('Book', bookSchema, 'Book'); //Troisième argument spécifie le nom de collection
 
 export default Book;

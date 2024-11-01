@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import Book from '../models/book.model';
-import Joi from 'joi'
+import Joi from 'joi';
 
 const router = Router();
 
@@ -40,7 +40,6 @@ async function validateBook(req: Request, res: Response, next: NextFunction) {
 router.get('/books', async (req: Request, res: Response) => {
     try {
       const books = await Book.find();
-      console.log(books);
       res.json(books);
     } catch (err) {
       res.status(500).json({ message: (err as Error).message });
@@ -91,8 +90,21 @@ router.get('/books', async (req: Request, res: Response) => {
  *     summary: Add a new book
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The title of the book
+ *                 example: exampleTitle
+ *               author:
+ *                 type: string
+ *                 description: The author of the book
+ *                 example: exampleAuthor
  *     responses:
- *       '201':
+ *       '200':
  *         description: The created book
  *       '400':
  *         description: Bad request
@@ -112,7 +124,7 @@ router.get('/books', async (req: Request, res: Response) => {
   
     try {
       const newBook = await book.save();
-      res.status(201).json(newBook);
+      res.status(200).json(newBook);
     } catch (err) {
       res.status(400).json({ message: (err as Error).message });
     }
@@ -131,6 +143,19 @@ router.get('/books', async (req: Request, res: Response) => {
  *           type: string
  *     requestBody:
  *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The title of the book
+ *                 example: exampleTitle
+ *               author:
+ *                 type: string
+ *                 description: The author of the book
+ *                 example: exampleAuthor
  *     responses:
  *       '200':
  *         description: The updated book
@@ -202,7 +227,7 @@ router.get('/books', async (req: Request, res: Response) => {
  */
   router.delete('/books/:id', getBook, async (req: Request, res: Response) => {
     try {
-      await res.locals.book.remove();
+      await Book.deleteOne(res.locals.book)
       res.json({ message: 'Livre supprimé' });
     } catch (err) {
       res.status(500).json({ message: (err as Error).message });
