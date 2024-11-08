@@ -4,7 +4,7 @@ import userRoutes from './routes/user.route';
 import productRoutes from './routes/product.route';
 import { errorMiddleware } from './middlewares/error.middleware';
 import axios from 'axios';
-import {logger} from './utils/logger';
+import { logger } from './utils/logger';
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 
@@ -14,10 +14,10 @@ const app = express();
 app.use(express.json());
 
 export async function fetchProducts(): Promise<void> {
-  try{
+  try {
     logger.info('Fetch data from fakestoreapi');
     const response = await axios.get('https://fakestoreapi.com/products');
-    const productsToModify : ImportedProduct[] = response?.data;
+    const productsToModify: ImportedProduct[] = response?.data;
     const products = productsToModify.map(product => ({
       id: product.id,
       name: product.title,
@@ -35,20 +35,20 @@ export async function fetchProducts(): Promise<void> {
 
 // Définir les options de Swagger
 const swaggerOptions = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'User API',
-        version: '1.0.0',
-        description: 'A simple API to manage users',
-      },
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'User API',
+      version: '1.0.0',
+      description: 'A simple API to manage users',
     },
-    apis: [`${__dirname}/routes/*.ts`], // Fichier où les routes de l'API sont définies
-  };
+  },
+  apis: [`${__dirname}/routes/*.ts`], // Fichier où les routes de l'API sont définies
+};
 
 // Générer la documentation à partir des options
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-  
+
 // Servir la documentation Swagger via '/api-docs'
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
