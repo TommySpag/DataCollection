@@ -1,4 +1,4 @@
-# Mon API pour le TP01
+# Mon API pour le TP03
 
 Une API RESTful pour gérer divers produits, utilisant les données de FakeStoreApi.
 
@@ -11,7 +11,7 @@ Avant de lancer l'API, assure-vous d'avoir installé:
 
 ## Installation
 
-1. Cloner ce dépôt git à la branche 'origin/TP01'
+1. Cloner ce dépôt git à la branche 'origin/TP03'
 2. Accèder au dossier DataCollection
 3. Créer son propre fichier .env à cet endroit
 4. Effectuer 'npm start'
