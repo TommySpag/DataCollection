@@ -1,0 +1,36 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - TP03
+  pull_request:
+    branches:
+      - TP03
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Étape 1 : Checkout du code
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Étape 2 : Installation de Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.11.0'
+
+    # Étape 3 : Installation des dépendances
+    - name: Install dependencies
+      run: npm install
+
+    # Étape 4 : Lancer les tests
+    - name: Run tests
+      run: npm run test
+
+    # Étape 5 : Lancer les tests de charge avec Artillery
+    - name: Run load tests with Artillery
+      run: npm run test:load
