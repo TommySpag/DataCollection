@@ -9,8 +9,7 @@ export const config = {
   CERT_CERT: process.env.CERT_CERT || '',
   sessionSecret: process.env.SESSION_SECRET || '',
   jwtSecret: process.env.JWT_SECRET || '',
-  databaseUrl: process.env.DATABASE_URL || '',
+  databaseUrl: process.env.DB_URI || '',
   nodeEnv: process.env.NODE_ENV || '',
-  ip: process.env.IP_A || '',
   isProduction: process.env.NODE_ENV === 'production'
 };

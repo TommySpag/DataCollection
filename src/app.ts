@@ -2,6 +2,7 @@ import express from 'express';
 import { ImportedProduct } from './interfaces/product.interface';
 import userRoutes from './routes/user.route';
 import productRoutes from './routes/product.route';
+import productRoutesV2 from './routes/product.route.v2';
 import { errorMiddleware } from './middlewares/error.middleware';
 import axios from 'axios';
 import { logger } from './utils/logger';
@@ -38,22 +39,36 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'User API',
-      version: '1.0.0',
-      description: 'A simple API to manage users',
+      title: 'User and Product API',
+      version: '2.0.0',
+      description: 'A simple API to manage users and products',
     },
+    tags: [
+      {
+        name: 'User',
+        description: 'Operations related to user management',
+      },
+      {
+        name: 'Product (v1)',
+        description: 'Operations related to product management using internal data',
+      },
+      {
+        name: 'Product (v2)',
+        description: 'Operations related to product management using MongoDB',
+      }
+    ],
   },
-  apis: [`${__dirname}/routes/*.ts`], // Fichier où les routes de l'API sont définies
+  apis: [`${__dirname}/routes/*.ts`],
 };
+
 
 // Générer la documentation à partir des options
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-
-// Servir la documentation Swagger via '/api-docs'
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use('/api/v1', userRoutes);
+app.use('/api', userRoutes);
 app.use('/api/v1', productRoutes);
+app.use('/api/v2', productRoutesV2);
 
 app.use(errorMiddleware);
 

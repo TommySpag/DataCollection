@@ -1,0 +1,28 @@
+config:
+  target: 'https://localhost:3000'
+  insecure: true
+  phases:
+    - duration: 60
+      arrivalRate: 50
+      name: "Traffic by login and GET request"
+  payload:
+    path: 'C:\Users\spagn\Desktop\users.csv'
+    fields:
+      - username
+      - password
+scenarios:
+  - flow:
+      - post:
+          url: '/api/login'
+          json:
+            username: '{{ username }}'
+            password: '{{ password }}'
+          capture:
+            json: '$.token'  
+            as: 'token'
+      - get:
+          url: '/api/v2/products'
+          headers:
+            Authorization: 'Bearer {{ token }}'
+          expect:
+            status: 200

@@ -2,7 +2,7 @@ import {ProductService} from '../src/services/product.service';
 
 test('Returns all products', async () => {
     const products = await ProductService.getAllProducts();
-    expect(products.length).toBe(1);
+    expect(products.length).toBe(20);
 });
 
 test('Creates a product', async () => {

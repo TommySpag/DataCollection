@@ -11,8 +11,10 @@ const SECRET_KEY = config.jwtSecret;
 
 /**
  * @swagger
- * /api/v1/users:
+ * /api/users:
  *   get:
+ *     tags:
+ *       - "User"
  *     summary: Retrieve a list of users
  *     description: Retrieve a list of users from the API. Can be used to populate a list of users in your system.
  *     responses:
@@ -36,8 +38,10 @@ router.get('/users', userController.getAllUsers);
 
 /**
  * @swagger
- * /api/v1/register:
+ * /api/register:
  *   post:
+ *     tags:
+ *       - "User"
  *     summary: Register a new user
  *     description: Registers a new user by creating a username and password after hashing the password.
  *     requestBody:
@@ -55,6 +59,10 @@ router.get('/users', userController.getAllUsers);
  *                 type: string
  *                 description: The password for the new user
  *                 example: examplePassword
+ *               role:
+ *                 type: string
+ *                 description: The role of the new user
+ *                 example: employee
  *     responses:
  *       '200':
  *         description: User successfully registered
@@ -70,18 +78,24 @@ router.get('/users', userController.getAllUsers);
  *         description: Bad request, invalid input
  */
 router.post('/register', async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
+
+    if(role !== "employee" && role !== "gestionnaire"){
+        return res.status(400).json({message: "role invalide"})
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    userController.registerUser({ username, password: hashedPassword });
+    userController.registerUser({ username, password: hashedPassword, role: role});
 
     res.json({ message: 'User registered successfully' });
 });
 
 /**
  * @swagger
- * /api/v1/login:
+ * /api/login:
  *   post:
+ *     tags:
+ *       - "User"
  *     summary: Login and generate a JWT
  *     description: Authenticates a user and generates a JSON Web Token (JWT) for access to protected resources.
  *     requestBody:
@@ -134,8 +148,10 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * @swagger
- * /api/v1/protected:
+ * /api/protected:
  *   get:
+ *     tags:
+ *       - "User"
  *     summary: Access a protected resource
  *     description: Access a protected endpoint which requires a valid JWT token in the `Authorization` header.
  *     security:

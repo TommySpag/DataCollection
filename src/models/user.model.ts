@@ -1,5 +1,5 @@
-import { User } from '../interfaces/user.interface';
+import { User} from '../interfaces/user.interface';
 
 export class UserModel implements User {
-  constructor(public username: string, public password: string) {}
+  constructor(public username: string, public password: string, public role: string) {}
 }

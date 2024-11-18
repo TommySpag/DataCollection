@@ -32,7 +32,7 @@ export class UserController {
     }
 
     // Génération d'un JWT
-    const token = jwt.sign({ username: user.username }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ username: user.username, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
 
     res.json({ token });
   }

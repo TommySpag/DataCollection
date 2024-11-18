@@ -2,6 +2,7 @@ import app, {fetchProducts} from './app';
 import session from 'express-session';
 import { config } from './config/config';
 import {logger} from './utils/logger';
+import mongoose from 'mongoose';
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
@@ -37,10 +38,46 @@ const ip = getLocalIPAddress();
 // Démarrage du serveur
 if(config.nodeEnv == 'production') {
     logger.info('Demarrage app');
+
+    mongoose.connect(config.databaseUrl + 'production', {
+      socketTimeoutMS: 30000,
+      connectTimeoutMS: 30000,
+    })
+    .then(() => {
+      console.log('MongoDB connected successfully');
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error);
+    });
+
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'Erreur de connexion à MongoDB:'));
+    db.once('open', () => {
+      console.log('Connexion à MongoDB réussie');
+    });
+
     app.listen(port, () => {  console.log(`Server is running on https://${ip}:${port}`);});
     fetchProducts();
 } else {
     logger.info('Demarrage app');
+
+    mongoose.connect(config.databaseUrl + 'test', {
+      socketTimeoutMS: 30000,
+      connectTimeoutMS: 30000,
+    })
+    .then(() => {
+      console.log('MongoDB connected successfully');
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error);
+    });
+    
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'Erreur de connexion à MongoDB:'));
+    db.once('open', () => {
+      console.log('Connexion à MongoDB réussie');
+    });
+
     https.createServer(httpsOptions, app).listen(port, () => {  console.log(`Server is running on https://${ip}:${port}`);});
     fetchProducts();
 }

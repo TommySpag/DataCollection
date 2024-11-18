@@ -1,3 +1,5 @@
+import { Document } from "mongoose";
+
 export interface ImportedProduct {
     id: number,
     title: string,
@@ -32,4 +34,12 @@ export interface ModifyProductDTO {
     description?: string;
     quantity?: number;
     price?: number;
+}
+
+export interface IProduct extends Document {
+    name: string;
+    description: string;
+    category: string;
+    quantity: number;
+    price: number;
 }
